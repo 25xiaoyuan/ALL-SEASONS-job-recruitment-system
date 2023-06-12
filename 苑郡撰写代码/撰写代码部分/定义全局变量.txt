@@ -1,0 +1,11 @@
+ public static Connection conn = null;
+    //public static Connection conn=DriverManager.getConnection()
+    //创建PreparedStatement对象
+    public static PreparedStatement ps = null;
+    public static ResultSet rs = null;
+
+    public static String userID=null;
+
+
+    // 定义Scanner输入流读取控制台输入
+    public static Scanner sc = new Scanner(System.in);

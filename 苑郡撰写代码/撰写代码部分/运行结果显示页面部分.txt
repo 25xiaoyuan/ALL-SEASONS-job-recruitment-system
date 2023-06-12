@@ -1,0 +1,97 @@
+ public static void goTtoTheHomepage(int number) throws SQLException {
+        //在校生
+        if(number==1){
+            studentMenu();
+        }
+        //招聘公司
+        if(number==2){
+            companyMenu();
+        }
+        //注册管理员
+        if(number==3){
+            managerMenu();
+        }
+
+    }
+
+    public static void companyMenu() throws SQLException {
+        System.out.println("欢迎进入招聘求职系统——招聘公司");
+        System.out.println("1.查看招聘信息");
+        System.out.println("2.编辑招聘信息");
+        System.out.println("3.查看简历信息");
+        System.out.println("4.个人中心");
+        System.out.println("请输入数字选择操作：");
+        int choice=sc.nextInt();
+        if(choice==1){
+            viewRecruitmentInformation();
+        }else if(choice==2){
+            editRecruitmentInformation();
+        }else if(choice==3){
+            viewResumeInformation();
+        }else if(choice==4){
+            companyPersonalCenter();
+        }else{
+                System.out.println("输入有误！");
+        }
+
+    }
+
+    public static void managerMenu() throws SQLException {
+        System.out.println("欢迎进入招聘求职系统——注册管理员");
+        System.out.println("1.查看招聘信息");
+        System.out.println("2.编辑招聘信息");
+        System.out.println("3.个人中心");
+        System.out.println("请输入数字选择操作：");
+        int choice=sc.nextInt();
+        if(choice==1){
+            viewRecruitmentInformation();
+        }else if(choice==2){
+            editRecruitmentInformation();
+        }else if(choice==3){
+            managerPersonalCenter();
+        }else{
+            System.out.println("输入有误！");
+        }
+    }
+
+    //在校生个人中心
+    public static void studentPersonalCenter() throws SQLException {
+        System.out.println("欢迎进入招聘求职系统——在校生——个人中心");
+        System.out.println("1.编辑个人信息");
+        System.out.println("2.编辑简历信息");
+        System.out.println("3.修改密码");
+        System.out.println("4.退出");
+        System.out.println("请输入数字选择操作：");
+
+        int choice=sc.nextInt();
+        if(choice==1){
+            editPersonalInformation(conn);
+        }else if(choice==2){
+            editResumeInformation();
+        }else if(choice==3){
+            changePassword();
+        }else if(choice==4)
+        {
+            withdraw();
+        }else{
+            System.out.println("输入有误！");
+        }
+    }
+
+    //注册管理员个人中心
+    public static void managerPersonalCenter() throws SQLException {
+        System.out.println("欢迎进入招聘求职系统——注册管理员——个人中心");
+        System.out.println("1.修改密码");
+        System.out.println("2.退出");
+        System.out.println("请输入数字选择操作：");
+
+        int choice=sc.nextInt();
+        if(choice==1){
+            changePassword();
+        }else if(choice==2){
+            withdraw();
+        }else{
+            System.out.println("输入有误！");
+        }
+    }
+

@@ -1,0 +1,5 @@
+ //退出
+    public static void withdraw(){
+        System.out.println("感谢使用本系统，再见！");
+        System.exit(0); // 退出系统
+    }

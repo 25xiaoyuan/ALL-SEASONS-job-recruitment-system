@@ -1,0 +1,18 @@
+//个人信息库
+    // 数据库连接信息，请根据自己的实际情况修改
+    //URL指定了要连接到的MySQL数据库的位置和名称，这里是本地主机上的“job_system”数据库，使用utf-8编码，并且设置时区为亚洲上海
+    public static final String URL = "jdbc:sqlserver://localhost;databaseName=recruitmentAndJobApplicationSystem";
+    public static final String USERNAME = "LOG1";
+    public static final String PASSWORD = "123";
+
+//以下部分在main()函数中
+ try {
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD );
+
+            //conn = DriverManager.getConnection(dbURL);
+            if (conn != null) {
+                System.out.println("数据库成功连接！");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
