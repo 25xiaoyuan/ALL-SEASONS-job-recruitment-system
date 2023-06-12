@@ -1,0 +1,180 @@
+// 注册函数
+    public static void register() {
+
+        System.out.println("====用户注册====");
+        System.out.println("1.在校生");
+        System.out.println("2.招聘公司");
+        System.out.println("++++++++++++++++++++");
+
+
+        String sql=null;
+        int choice=sc.nextInt();
+        if(choice==1){
+
+            System.out.println("请输入用户名:");
+            String username = sc.next();
+            System.out.println("请输入密码:");
+            String password = sc.next();
+            System.out.println("请输入验证码：");
+            String captcha= sc.next();
+
+            try {
+                sql="INSERT INTO User_ants_info (ID, User_Code, User_Captcha) VALUES (?, ?, ?)";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, username);
+                ps.setString(2, password);
+                ps.setString(3, captcha);
+
+                //返回受影响的行数
+                //如果成功插入，则返回值为1，否则返回0
+                int affectedRows = ps.executeUpdate();
+                if (affectedRows > 0) {
+                    System.out.println("注册成功！");
+                    //在校生
+                    System.out.println("请完善个人基本信息：");
+
+                    try{
+
+                        String id="SELECT MAX(ID) + 1 FROM Stu_per_info";
+                        ps = conn.prepareStatement(id);
+                        rs = ps.executeQuery();
+
+                        String strStudentId=null;
+                        while (rs.next()) {
+                            int studentId = rs.getInt(1);
+                            // 获取查询结果的第一列数据（ID 列）
+                            strStudentId=String.valueOf(studentId);
+                        }
+
+                        sql= "INSERT INTO Stu_per_info (ID, Stu_Name, Stu_Sex,Stu_School,Stu_Academy,Stu_Major,Stu_Result) VALUES (?,?, ?, ?,?,?,?)";
+
+
+                        //String id="(SELECT MAX(columnName) + 1 FROM tableName)";
+                        ps = conn.prepareStatement(sql);
+                        ps.setString(1, strStudentId);
+                        System.out.println("姓名：");
+                        ps.setString(2,sc.next());
+                        System.out.println("性别：");
+                        ps.setString(3,sc.next());
+                        System.out.println("学校：");
+                        ps.setString(4,sc.next());
+                        System.out.println("学院：");
+                        ps.setString(5,sc.next());
+                        System.out.println("专业：");
+                        ps.setString(6,sc.next());
+
+                        ps.setString(7,"否");
+                        ps.execute();
+                        System.out.println("添加成功！");
+                        //进入登录页面
+                        login();
+                    }catch (SQLException e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("注册失败！");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("注册失败！");
+            }
+
+        }else if(choice==2){
+
+            System.out.println("请输入用户名:");
+            String username = sc.next();
+            System.out.println("请输入密码:");
+            String password = sc.next();
+            System.out.println("请输入验证码：");
+            String captcha= sc.next();
+
+            try {
+                sql="INSERT INTO User_ants_info (ID, User_Code, User_Captcha) VALUES (?, ?, ?)";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, username);
+                ps.setString(2, password);
+                ps.setString(3, captcha);
+
+                //返回受影响的行数
+                //如果成功插入，则返回值为1，否则返回0
+                int affectedRows = ps.executeUpdate();
+                if (affectedRows > 0) {
+                    System.out.println("注册成功！");
+
+                    //公司认证
+
+                    System.out.println("下面进入公司认证！");
+
+                    System.out.println("请输入编号:");
+                    String number = sc.next();
+                    System.out.println("请输入税务登记证号码:");
+                    String taxRegistrationCertificateNumber = sc.next();
+                    System.out.println("请输入组织机构代码:");
+                    String organizationCode= sc.next();
+
+                    sql = "SELECT ID, TRCN,OC FROM Com_cert_info WHERE ID = ? AND TRCN=? AND OC=?";
+
+                    ps = conn.prepareStatement(sql);
+                    ps.setString(1, number);
+                    ps.setString(2, taxRegistrationCertificateNumber);
+                    ps.setString(3, organizationCode);
+
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        // 对查询结果进行处理
+                        System.out.println("认证成功！");
+                    }
+
+
+                    //招聘公司
+                    System.out.println("请完善公司的基本信息:");
+
+                    try{
+                        
+                        String id="SELECT MAX(ID) + 1 FROM Com_info";
+
+                        ps = conn.prepareStatement(id);
+                        rs = ps.executeQuery();
+
+                        String strCompanyId=null;
+                        while (rs.next()) {
+                            int companyId = rs.getInt(1);
+                            // 获取查询结果的第一列数据（ID 列）
+                            strCompanyId=String.valueOf(companyId);
+                        }
+                        sql= "INSERT INTO Com_info (ID, Com_Name, Com_Synopsis,Com_Address,Com_PhoneNumber,Com_Email) VALUES (?, ?, ?,?,?,?)";
+                        ps = conn.prepareStatement(sql);
+                        ps.setString(1,strCompanyId);
+                        System.out.println("公司名称：");
+                        ps.setString(2,sc.next());
+                        System.out.println("公司简介：");
+                        ps.setString(3,sc.next());
+                        System.out.println("公司地址：");
+                        ps.setString(4,sc.next());
+                        System.out.println("公司电话：");
+                        ps.setInt(5,sc.nextInt());
+                        System.out.println("公司邮箱：");
+                        ps.setString(6,sc.next());
+                        
+                        ps.execute();
+                        System.out.println("添加成功！");
+                        //进入登录页面
+                        login();
+                    }catch (SQLException e){
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    System.out.println("注册失败！");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("注册失败！");
+            }
+
+        }else{
+            System.out.println("输入有误！");
+        }
+
+    }
